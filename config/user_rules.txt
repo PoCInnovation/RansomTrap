@@ -1,0 +1,3 @@
+/home/tim/Documents/rapport_final.pdf
+/home/tim/Bureau/compta_2024.xlsx
+regex:^.*salaire.*\.xlsx$

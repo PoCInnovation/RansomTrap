@@ -1,0 +1,6 @@
+facture
+mot_de_passe
+secret
+confidentiel
+banque
+cv
