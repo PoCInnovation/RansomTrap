@@ -3,7 +3,7 @@ from database import init_database
 from lures import create_lures
 
 def main():
-    if os.path.exists('LURE.db'):
+    if os.path.exists('lures.db'):
         print("Load database...")
     else:
         print("Initializing database...")
