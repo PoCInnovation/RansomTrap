@@ -25,6 +25,7 @@ class Lure(Base):
 
 def init_database():
     Base.metadata.create_all(engine)
+    os.chmod(DB_PATH, 0o600)
     print(f"✅ Table 'Lures' ready at {DB_PATH} !")
 
 def insert_lure_in_db(filename, signature, path, path_copy):
@@ -37,5 +38,13 @@ def insert_lure_in_db(filename, signature, path, path_copy):
     except Exception as e:
         session.rollback()
         print(f"[❌] Error inserting lure: {e}")
+    finally:
+        session.close()
+
+def lure_exists(path):
+    session = Session()
+    try:
+        exists = session.query(Lure).filter_by(path=path).first() is not None
+        return exists
     finally:
         session.close()
