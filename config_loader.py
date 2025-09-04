@@ -9,7 +9,7 @@ def load_lines(filename):
         with open(os.path.join(CONFIG_DIR, filename), "r") as f:
             return [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"[⚠️] Fichier {filename} introuvable.")
+        print(f"[⚠️] File {filename} not found.")
         return []
 
 def load_extensions():
@@ -30,7 +30,7 @@ def load_user_rules():
                 regex = re.compile(line[6:])
                 regex_rules.append(regex)
             except re.error as e:
-                print(f"[❌] Regex invalide : {line[6:]} ({e})")
+                print(f"[❌] Invalid regex : {line[6:]} ({e})")
         else:
             exact_paths.add(os.path.normpath(line))
 
@@ -40,7 +40,12 @@ def should_copy_file(filepath, extensions, keywords, exact_paths, regex_rules):
     if os.path.normpath(filepath) in exact_paths:
         return True
 
-    ext = os.path.splitext(filepath)
+    splitted_path = os.path.splitext(filepath)
+    ext = splitted_path[1]
+
+    if splitted_path[0].endswith("_copie"):
+        return False
+
     if ext.lower() in extensions:
         return True
 
